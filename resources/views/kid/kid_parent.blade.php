@@ -100,7 +100,12 @@
 <td>
           @foreach (Session('ks') as $s)
  
-    {{$s->name}},
+    {{$s->name}}
+    <div class="col-md-1" >
+                   <a href="{!! route('delete_relation_kid_parent', ['id'=>$s->id]) !!}">  <img src="{{asset('image-project/delete.png')}}" width="30px"></a>
+                  </div>
+  </td>
+  <tr><td></td><td>
          @endforeach
          </td> 
          @endif

@@ -103,7 +103,12 @@
 
           @foreach (Session('gs') as $s)
  
-    {{$s->name_groups}},
+    {{$s->name_groups}}
+    <div class="col-md-1" >
+                   <a href="{!! route('delete_relation_group_supervisor', ['id'=>$s->id]) !!}">  <img src="{{asset('image-project/delete.png')}}" width="30px"></a>
+                  </div>
+  </td>
+  <tr><td></td><td>
          @endforeach
          @endif
          </td> 
