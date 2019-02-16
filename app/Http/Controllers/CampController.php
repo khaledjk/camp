@@ -67,7 +67,7 @@ class CampController extends Controller
     						$camp_file = new CampFile;
     						$camp_file->id_camp=$camp->id;
     						$camp_file->img_name=$filename;
-    						$camp_file->img_url='192.168.1.200/upload/camp/'.$filename;
+    						$camp_file->img_url='192.168.1.200/public/upload/camp/'.$filename;
 							$camp_file->save();
 			}
 
@@ -202,7 +202,7 @@ return Redirect::back()->with('success', 'New Product successfuly Updated');
 if($r->hasFile('photo')){
           //  unlink('upload/camp/'.$camp_img->img_name);
              $camp_img->img_name = $photo_name;
-                $camp_img->img_url = '192.168.1.200/upload/camp/'.$photo_name;
+                $camp_img->img_url = '192.168.1.200/public/upload/camp/'.$photo_name;
                 $camp_img->id_camp = $id;
         }
                

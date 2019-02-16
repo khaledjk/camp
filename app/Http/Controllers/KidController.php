@@ -84,7 +84,7 @@ class KidController extends Controller
                                 $kid->active=$active;
 
                 $kid->img_profile = $photo_name;
-                $kid->url_profile = '192.168.1.200/upload/camp/'.$photo_name;
+                $kid->url_profile = '192.168.1.200/public/upload/camp/'.$photo_name;
                 $kid->status = 0;
                 $radio = $r->get('gender', 0);
                 $kid->gender = $radio;
@@ -230,7 +230,7 @@ $kids = DB::table('kids')->Join('groups','kids.id_group','=','groups.id')->selec
                                 $kid->gender = $radio;
 
                 $kid->img_profile = $photo_name;
-                $kid->url_profile = '192.168.1.200/upload/kid/'.$photo_name;
+                $kid->url_profile = '192.168.1.200/public/upload/kid/'.$photo_name;
                // $kid->status = 0;
                 $kid->id_group = $id_group;
              
@@ -283,8 +283,10 @@ return Redirect::back()->with('success', 'New Product successfuly Updated');
 
                 $ks = Kid::where('id_parent','=',$id_parent)->get();
 
-               //$kids = Kid::orderBy('id','DESC')->get();
-               // $parents = Parentfm::orderBy('id','DESC')->get();
+               $success = 'New Relation successfuly Updated';
+
+               $kids = Kid::orderBy('id','DESC')->get();
+                $parents = Parentfm::orderBy('id','DESC')->get();
 
 return Redirect::back()->with('success', 'New Relation successfuly Updated')->with('p_name',$p_name)->with('ks',$ks);
 
@@ -292,28 +294,4 @@ return Redirect::back()->with('success', 'New Relation successfuly Updated')->wi
 
   
 }
-
-    public function delete_relation_kid_parent($id)
-    {
-         $kid = Kid::findOrFail($id);
-
-         $id_parent = $kid->id_parent;
-
-
-        $kid->id_parent = 0;
-        $kid->save();
-
-        $p = Parentfm::findOrFail($id_parent);
-            $p_name = $p->name_father;
-
-                $ks = Kid::where('id_parent','=',$id_parent)->get();
-
-
-
-      return Redirect::back()->with('success' , 'Relation parent<->Kid was Deleted successfuly!!')->with('p_name',$p_name)->with('ks',$ks);
-
-    }
-
-
-
 }

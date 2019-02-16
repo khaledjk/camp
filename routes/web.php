@@ -60,7 +60,6 @@ Route::get('view_group_image/{id}', ['as' => 'view_group_image', 'uses' => 'Grou
 Route::get('delete_group_img/{id}', ['as' => 'delete_group_img', 'uses' => 'GroupController@delete_group_img']);
 Route::get('delete_group_video/{id}', ['as' => 'delete_group_video', 'uses' => 'GroupController@delete_group_video']);
 
-Route::get('delete_relation_group_supervisor/{id}', ['as' => 'delete_relation_group_supervisor', 'uses' => 'GroupController@delete_relation_group_supervisor']);
 
 
 
@@ -83,7 +82,6 @@ Route::get('delete_kid/{id}', ['as' => 'delete_kid', 'uses' => 'KidController@de
 Route::get('all_kids', ['as' => 'all_kids','uses' => 'KidController@manage_kids']);
 Route::get('select_parent', ['as' => 'select_parent','uses' => 'KidController@select_parent']);
 Route::post('add_parent_kid', ['as' => 'add_parent_kid','uses' => 'KidController@add_parent_kid']);
-Route::get('delete_relation_kid_parent/{id}', ['as' => 'delete_relation_kid_parent', 'uses' => 'KidController@delete_relation_kid_parent']);
 
 
 
@@ -228,24 +226,24 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 
-// Route::group(['prefix' => config('youtube.routes.prefix')], function() {
-//     /**
-//      * Authentication
-//      */
-//     Route::get(config('youtube.routes.authentication_uri'), function()
-//     {
-//         return redirect()->to(Youtube::createAuthUrl());
-//     });
-//     /**
-//      * Redirect
-//      */
-//     Route::get(config('youtube.routes.redirect_uri'), function(Illuminate\Http\Request $request)
-//     {
-//         if(!$request->has('code')) {
-//             throw new Exception('$_GET[\'code\'] is not set. Please re-authenticate.');
-//         }
-//         $token = Youtube::authenticate($request->get('code'));
-//         Youtube::saveAccessTokenToDB($token);
-//         return redirect(config('youtube.routes.redirect_back_uri', '/'));
-//     });
-// });
+Route::group(['prefix' => config('youtube.routes.prefix')], function() {
+    /**
+     * Authentication
+     */
+    Route::get(config('youtube.routes.authentication_uri'), function()
+    {
+        return redirect()->to(Youtube::createAuthUrl());
+    });
+    /**
+     * Redirect
+     */
+    Route::get(config('youtube.routes.redirect_uri'), function(Illuminate\Http\Request $request)
+    {
+        if(!$request->has('code')) {
+            throw new Exception('$_GET[\'code\'] is not set. Please re-authenticate.');
+        }
+        $token = Youtube::authenticate($request->get('code'));
+        Youtube::saveAccessTokenToDB($token);
+        return redirect(config('youtube.routes.redirect_back_uri', '/'));
+    });
+});

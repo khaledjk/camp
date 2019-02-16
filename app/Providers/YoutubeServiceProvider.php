@@ -1,5 +1,6 @@
 <?php
-namespace App\Providers;
+
+namespace Dawson\Youtube;
 use Illuminate\Support\ServiceProvider;
 class YoutubeServiceProvider extends ServiceProvider
 {

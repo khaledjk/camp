@@ -215,17 +215,10 @@ return Redirect::back()->with('success', 'New Product successfuly Updated');
             $supervisors = Supervisor::where('id_user','=',$id_supervisors)->get();
             foreach($supervisors as $supervisor)
             {
-              foreach($id_groups as $id_group)
-              {
-                if($supervisor->id_group == $id_group)
-                {
               $supervisor->delete();
             }
-           }
-         }
             foreach($id_groups as $id_group)
            {
-
                 $supervisor = new Supervisor();
                 $supervisor->id_user = $id_supervisors;
             
@@ -235,7 +228,7 @@ return Redirect::back()->with('success', 'New Product successfuly Updated');
              
                 $supervisor->save();
       }
-            $gs = DB::table('supervisors')->join('groups','supervisors.id_group','=','groups.id')->selectRaw('supervisors.id as id, groups.name as name_groups')->where('supervisors.id_user','=',$id_supervisors)->get();  
+            $gs = DB::table('supervisors')->join('groups','supervisors.id_group','=','groups.id')->selectRaw('groups.name as name_groups')->where('supervisors.id_user','=',$id_supervisors)->get();  
 
             $user = User::findOrFail($id_supervisors);
             $name_supervisor = $user->name;
@@ -247,22 +240,7 @@ return Redirect::back()->with('success', 'New Relation successfuly Updated')->wi
   
 }
 
-    public function delete_relation_group_supervisor($id)
-    {
-         $supervisor = Supervisor::findOrFail($id);
-      $supervisor->delete();
-      $id_group = $supervisor->id_group;
-      $id_supervisor = $supervisor->id_user;
 
-      $gs = DB::table('supervisors')->join('groups','supervisors.id_group','=','groups.id')->selectRaw('supervisors.id as id, groups.name as name_groups')->where('supervisors.id_user','=',$id_supervisor)->get();
-
-       $user = User::findOrFail($id_supervisor);
-            $name_supervisor = $user->name;
- 
-  
-      return Redirect::Back()->with('success' , 'Relation supervisor->group was Deleted successfuly!!')->with('gs',$gs)->with('name_supervisor',$name_supervisor);
-
-    }
 
 
 
@@ -298,7 +276,7 @@ return Redirect::back()->with('success', 'New Relation successfuly Updated')->wi
                             $photo->move('upload/group/image/', $filename);
                             $img_file = new Image;
                             $img_file->filename=$filename;
-                            $img_file->url='192.168.1.200/upload/group/image/'.$filename;
+                            $img_file->url='192.168.1.200/public/upload/group/image/'.$filename;
                             $img_file->id_group = $id;
                              $img_file->daily_date = $date;
 
@@ -345,14 +323,10 @@ return Redirect::back()->with('success', 'New images successfuly Uploaded');
                             $video->move('upload/group/video/', $filename);
                             $video_file = new Video;
                             $video_file->filename=$filename;
-                            $video_file->url='192.168.1.200/upload/group/video/'.$filename;
+                            $video_file->url='192.168.1.200/public/upload/group/video/'.$filename;
                             $video_file->id_group = $id;
                             $video_file->daily_date = $date;
                             $video_file->save();
-
-
-
-                            
                             $video = Youtube::upload($namev, [
     'title'       => 'My Awesome Video',
     'description' => 'You can also specify your video description here.',
